@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geel Ganacsi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div>
+    <h1>Geel Ganacsi</h1>
+    <p>Maamulka Geela, Hilibka, Deymaha & Faa'iidada</p>
+  </div>
+  <button class="lock-btn" onclick="lockApp()">Quful</button>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" data-page="home">Bogga Hore</button>
+  <button class="tab" data-page="camel">Geel</button>
+  <button class="tab" data-page="meat">Hilib</button>
+  <button class="tab" data-page="debt">Deymo</button>
+  <button class="tab" data-page="expenses">Kharashyo</button>
+  <button class="tab" data-page="reports">Warbixin</button>
+  <button class="tab" data-page="settings">Dejinta</button>
+</nav>
+
+<main>
+<section id="home" class="page active">
+  <h2>Dashboard</h2>
+  <div class="cards">
+    <div class="card"><span>Faa'iidada maanta</span><b id="todayProfit">0 SLSH</b></div>
+    <div class="card"><span>Lacagta la iga leeyahay</span><b id="receivable">0 SLSH</b></div>
+    <div class="card"><span>Lacagta aan ku leeyahay</span><b id="payable">0 SLSH</b></div>
+    <div class="card"><span>Geel aan weli iibin</span><b id="unsold">0</b></div>
+    <div class="card"><span>Faa'iidada bishan</span><b id="monthProfit">0 SLSH</b></div>
+    <div class="card"><span>Wadarta iibka</span><b id="salesTotal">0 SLSH</b></div>
+    <div class="card"><span>Wadarta kharashaadka</span><b id="expenseTotal">0 SLSH</b></div>
+    <div class="card"><span>Geel la gawracay</span><b id="slaughtered">0</b></div>
+  </div>
+</section>
+
+<section id="camel" class="page">
+  <div class="section-head"><h2>Diiwaangelinta Geela</h2><button onclick="openModal('camelModal')">+ Geel Cusub</button></div>
+  <input id="camelSearch" class="search" placeholder="Raadi magaca ama lambarka geela..." oninput="renderCamels()">
+  <div class="table-wrap"><table><thead><tr><th>Magac/Lambar</th><th>Qiime</th><th>Taariikh</th><th>Qof laga iibsaday</th><th>Gaadiid</th><th>Xaalad</th><th>Ficil</th></tr></thead><tbody id="camelTable"></tbody></table></div>
+</section>
+
+<section id="meat" class="page">
+  <div class="section-head"><h2>Iibka Hilibka</h2><button onclick="openModal('meatModal')">+ Iib Cusub</button></div>
+  <input id="meatSearch" class="search" placeholder="Raadi macmiil ama taariikh..." oninput="renderMeat()">
+  <div class="table-wrap"><table><thead><tr><th>Geel</th><th>Macmiil</th><th>Miisaan (kg)</th><th>Qiime</th><th>Bixiyey</th><th>Deyn</th><th>Taariikh</th><th>Ficil</th></tr></thead><tbody id="meatTable"></tbody></table></div>
+</section>
+
+<section id="debt" class="page">
+  <div class="section-head"><h2>Deymaha</h2><button onclick="openModal('debtModal')">+ Deyn Cusub</button></div>
+  <div class="cards mini">
+    <div class="card"><span>La iga leeyahay</span><b id="debtIn">0 SLSH</b></div>
+    <div class="card"><span>Aniga aan leeyahay</span><b id="debtOut">0 SLSH</b></div>
+  </div>
+  <div class="table-wrap"><table><thead><tr><th>Qof</th><th>Nooc</th><th>Qadarka</th><th>La bixiyey</th><th>Hadhaaga</th><th>Taariikh</th><th>Ficil</th></tr></thead><tbody id="debtTable"></tbody></table></div>
+</section>
+
+<section id="expenses" class="page">
+  <div class="section-head"><h2>Kharashaadka & Lacagaha Kale</h2><button onclick="openModal('expenseModal')">+ Diiwaan Cusub</button></div>
+  <div class="table-wrap"><table><thead><tr><th>Nooc</th><th>Sharaxaad</th><th>Qadar</th><th>Taariikh</th><th>Ficil</th></tr></thead><tbody id="expenseTable"></tbody></table></div>
+</section>
+
+<section id="reports" class="page">
+  <h2>Warbixin & Raadinta</h2>
+  <div class="report-tools">
+    <label>Laga bilaabo <input type="date" id="fromDate"></label>
+    <label>Ku dhammaad <input type="date" id="toDate"></label>
+    <button onclick="generateReport()">Samee Warbixin</button>
+    <button onclick="window.print()">Daabac</button>
+    <button onclick="exportCSV()">Dhoofso CSV</button>
+  </div>
+  <div id="reportBox" class="report-box"></div>
+</section>
+
+<section id="settings" class="page">
+  <h2>Kaydinta & Ilaalinta Xogta</h2>
+  <div class="settings-grid">
+    <button onclick="backupData()">Kaydi xogta (JSON)</button>
+    <label class="file-btn">Soo celi xogta <input type="file" accept=".json" onchange="restoreData(event)"></label>
+    <button onclick="setPin()">Samee/Beddel PIN</button>
+    <button class="danger" onclick="clearAll()">Tirtir dhammaan xogta</button>
+  </div>
+  <p class="note">Xogta waxaa lagu kaydinayaa browser-ka telefoonka (offline/localStorage). Samee backup joogto ah si xogtu u badbaado.</p>
+</section>
+</main>
+
+<!-- Modals -->
+<div id="camelModal" class="modal"><div class="modal-box"><span class="close" onclick="closeModal('camelModal')">&times;</span><h2>Geel Cusub</h2>
+<form id="camelForm">
+<input name="name" placeholder="Magaca ama lambarka geela" required>
+<input name="price" type="number" min="0" placeholder="Qiimaha geela (SLSH)" required>
+<input name="date" type="date" required>
+<input name="seller" placeholder="Qofka laga iibsaday">
+<input name="transport" type="number" min="0" placeholder="Kharashka gaadiidka">
+<select name="status"><option>La iibsaday</option><option>La gawracay</option><option>Hilibkii waa la iibiyey</option></select>
+<input name="weight" type="number" min="0" step="0.01" placeholder="Miisaanka hilibka (kg), haddii la hayo">
+<input name="lossReason" placeholder="Sababta khasaaraha haddii uu jiro">
+<textarea name="notes" placeholder="Faahfaahin kale"></textarea>
+<button type="submit">Kaydi</button></form></div></div>
+
+<div id="meatModal" class="modal"><div class="modal-box"><span class="close" onclick="closeModal('meatModal')">&times;</span><h2>Iibka Hilibka</h2>
+<form id="meatForm">
+<select name="camelId" id="meatCamel" required></select>
+<input name="customer" placeholder="Magaca macmiilka" required>
+<input name="weight" type="number" min="0" step="0.01" placeholder="Miisaanka (kg)">
+<select name="pricing"><option value="total">Qiime guud</option><option value="parts">Qaybo kala duwan</option></select>
+<input name="price" type="number" min="0" placeholder="Qiimaha guud (SLSH)" required>
+<input name="paid" type="number" min="0" placeholder="Lacagta uu bixiyey" required>
+<input name="date" type="date" required>
+<textarea name="notes" placeholder="Faahfaahin kale"></textarea>
+<button type="submit">Kaydi Iibka</button></form></div></div>
+
+<div id="debtModal" class="modal"><div class="modal-box"><span class="close" onclick="closeModal('debtModal')">&times;</span><h2>Deyn Cusub</h2>
+<form id="debtForm">
+<input name="person" placeholder="Magaca qofka" required>
+<select name="type"><option value="in">Qof baa igu leh</option><option value="out">Anigaa qof ku leh</option></select>
+<input name="amount" type="number" min="0" placeholder="Qadarka" required>
+<input name="paid" type="number" min="0" placeholder="Lacagta la bixiyey">
+<input name="date" type="date" required>
+<textarea name="notes" placeholder="Faahfaahin"></textarea>
+<button type="submit">Kaydi Deynta</button></form></div></div>
+
+<div id="expenseModal" class="modal"><div class="modal-box"><span class="close" onclick="closeModal('expenseModal')">&times;</span><h2>Kharash/Lacag Soo Gashay</h2>
+<form id="expenseForm">
+<select name="type"><option value="expense">Kharash</option><option value="income">Lacag kale oo soo gashay</option></select>
+<input name="category" placeholder="Tusaale: shaqaale, gawrac, rarid..." required>
+<input name="amount" type="number" min="0" placeholder="Qadarka SLSH" required>
+<input name="date" type="date" required>
+<textarea name="notes" placeholder="Faahfaahin"></textarea>
+<button type="submit">Kaydi</button></form></div></div>
+
+<div id="pinScreen" class="pin-screen hidden">
+  <div class="pin-box"><h2>App-ka waa Qufulan yahay</h2><input id="pinInput" type="password" inputmode="numeric" maxlength="8" placeholder="Geli PIN"><button onclick="unlockApp()">Fur</button><p id="pinError"></p></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+************* Crash Head ****************
+Time Of Crash      : 2026_10_12-18_49_24
+Device Manufacturer: samsung
+Device Model       : SM-S911B
+Android Version    : 16
+Android SDK        : 36
+App VersionName    : 0.2.17
+App VersionCode    : 217
+************* Crash Head ****************
+
+java.lang.Error: FATAL EXCEPTION [UnityMain]
+Unity version     : 2020.3.49f1
+Device model      : samsung SM-S911B
+Device fingerprint: samsung/dm1qxeea/dm1q:16/BP2A.250605.031.A3/S911BXXS9EZCI:user/release-keys
+Build Type        : Release
+Scripting Backend : Mono
+ABI               : arm64-v8a
+Strip Engine Code : false
+
+Caused by: java.lang.Error: *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+Version '2020.3.49f1 (18249dd5551b)', Build type 'Release', Scripting Backend 'il2cpp', CPU 'arm64-v8a'
+Build fingerprint: 'samsung/dm1qxeea/dm1q:16/BP2A.250605.031.A3/S911BXXS9EZCI:user/release-keys'
+Revision: '13'
+ABI: 'arm64'
+Timestamp: 2026-10-12 18:49:23+0300
+pid: 7316, tid: 7638, name: UnityMain  >>> com.football.soccer.league <<<
+uid: 10360
+signal 6 (SIGABRT), code -1 (SI_QUEUE), fault addr --------
+    x0  0000000000000000  x1  0000000000001dd6  x2  0000000000000006  x3  0000007bba7bd640
+    x4  0000000000000010  x5  0000000000000010  x6  0000000000000010  x7  7f7f7f7f7f7f7f7f
+    x8  00000000000000f0  x9  7e6b5de7ce09f8da  x10 000000ff00000020  x11 fffffffffffffff0
+    x12 0000000000000010  x13 b400007ca213fd10  x14 00000000fffffff0  x15 0000007b98bd0587
+    x16 0000007d8fb51dd0  x17 0000007d8fb37400  x18 0000000000000000  x19 0000000000001c94
+    x20 0000000000001dd6  x21 00000000ffffffff  x22 0000007ba9dfb380  x23 fffffffe13c96030
+    x24 0000000000000000  x25 0000000000000100  x26 0000007b99767fc8  x27 0000007b99767f48
+    x28 0000000000000000  x29 0000007bba7bd6c0
+    sp  0000007bba7bd640  lr  0000007d8fad3298  pc  0000007d8fad32bc
+
+backtrace:
+      #00 pc 00000000000a82bc  /apex/com.android.runtime/lib64/bionic/libc.so (abort+160) (BuildId: 661196ed39afcd22918f775f9b562bb4)
+
+	at libc.abort(abort:160)
